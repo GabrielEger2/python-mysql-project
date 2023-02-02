@@ -1,14 +1,14 @@
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+    QSize, QTime, QUrl, Qt, QSortFilterProxyModel)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QDateEdit, QHBoxLayout,
-    QHeaderView, QLabel, QLineEdit, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QTableWidget,
-    QTableWidgetItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QDateEdit,
+    QHBoxLayout, QHeaderView, QLabel, QLineEdit,
+    QMainWindow, QPushButton, QSizePolicy, QSpacerItem,
+    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QTableView)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -34,9 +34,8 @@ class Ui_MainWindow(object):
 "    background-color: #404040;\n"
 "    padding: 5px;\n"
 "}")
-        self.horizontalLayout_8 = QHBoxLayout(self.centralwidget)
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(16, 20, 16, 20)
+        self.horizontalLayout_9 = QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.verticalLayout_8 = QVBoxLayout()
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.verticalLayout_8.setContentsMargins(15, 20, 15, 20)
@@ -101,27 +100,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_8.addLayout(self.verticalLayout_7)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
-
-        self.verticalLayout_8.addItem(self.verticalSpacer_2)
-
         self.verticalLayout_6 = QVBoxLayout()
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.label_5 = QLabel(self.centralwidget)
-        self.label_5.setObjectName(u"label_5")
-
-        self.verticalLayout_6.addWidget(self.label_5)
-
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.PhoneEntry = QLineEdit(self.centralwidget)
-        self.PhoneEntry.setObjectName(u"PhoneEntry")
-        sizePolicy1.setHeightForWidth(self.PhoneEntry.sizePolicy().hasHeightForWidth())
-        self.PhoneEntry.setSizePolicy(sizePolicy1)
-        self.PhoneEntry.setStyleSheet(u"color: rgb(255, 255, 255);")
-
-        self.horizontalLayout_6.addWidget(self.PhoneEntry)
-
 
         self.verticalLayout_6.addLayout(self.horizontalLayout_6)
 
@@ -193,6 +175,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_8.addItem(self.verticalSpacer_5)
 
+        self.horizontalLayout_8 = QHBoxLayout()
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.AddButton = QPushButton(self.centralwidget)
         self.AddButton.setObjectName(u"AddButton")
         self.AddButton.setEnabled(True)
@@ -201,6 +185,7 @@ class Ui_MainWindow(object):
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.AddButton.sizePolicy().hasHeightForWidth())
         self.AddButton.setSizePolicy(sizePolicy3)
+        self.AddButton.setMaximumSize(QSize(16777215, 26))
         self.AddButton.setSizeIncrement(QSize(0, 3))
         self.AddButton.setStyleSheet(u"QPushButton{\n"
 "    color: white;\n"
@@ -218,40 +203,17 @@ class Ui_MainWindow(object):
 "    background-color: #2d5bd4;\n"
 "}")
 
-        self.verticalLayout_8.addWidget(self.AddButton, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+        self.horizontalLayout_8.addWidget(self.AddButton)
 
-        self.verticalSpacer_8 = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.MinimumExpanding)
-
-        self.verticalLayout_8.addItem(self.verticalSpacer_8)
-
-
-        self.horizontalLayout_8.addLayout(self.verticalLayout_8)
-
-        self.verticalLayout_9 = QVBoxLayout()
-        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.SearchEntry = QLineEdit(self.centralwidget)
-        self.SearchEntry.setObjectName(u"SearchEntry")
-        sizePolicy1.setHeightForWidth(self.SearchEntry.sizePolicy().hasHeightForWidth())
-        self.SearchEntry.setSizePolicy(sizePolicy1)
-        self.SearchEntry.setStyleSheet(u"color: rgb(255, 255, 255);")
-
-        self.horizontalLayout.addWidget(self.SearchEntry)
-
-        self.horizontalSpacer = QSpacerItem(5, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-
-        self.horizontalLayout.addItem(self.horizontalSpacer)
-
-        self.Search = QPushButton(self.centralwidget)
-        self.Search.setObjectName(u"Search")
-        self.Search.setEnabled(True)
-        sizePolicy3.setHeightForWidth(self.Search.sizePolicy().hasHeightForWidth())
-        self.Search.setSizePolicy(sizePolicy3)
-        self.Search.setSizeIncrement(QSize(0, 3))
-        self.Search.setStyleSheet(u"QPushButton{\n"
+        self.UpdateButton = QPushButton(self.centralwidget)
+        self.UpdateButton.setObjectName(u"UpdateButton")
+        self.UpdateButton.setEnabled(True)
+        sizePolicy3.setHeightForWidth(self.UpdateButton.sizePolicy().hasHeightForWidth())
+        self.UpdateButton.setSizePolicy(sizePolicy3)
+        self.UpdateButton.setMinimumSize(QSize(0, 0))
+        self.UpdateButton.setMaximumSize(QSize(16777215, 26))
+        self.UpdateButton.setSizeIncrement(QSize(0, 3))
+        self.UpdateButton.setStyleSheet(u"QPushButton{\n"
 "    color: white;\n"
 "    border: none;\n"
 "    padding: 5px;\n"
@@ -267,7 +229,31 @@ class Ui_MainWindow(object):
 "    background-color: #2d5bd4;\n"
 "}")
 
-        self.horizontalLayout.addWidget(self.Search)
+        self.horizontalLayout_8.addWidget(self.UpdateButton)
+
+
+        self.verticalLayout_8.addLayout(self.horizontalLayout_8)
+
+        self.verticalSpacer_8 = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.MinimumExpanding)
+
+        self.verticalLayout_8.addItem(self.verticalSpacer_8)
+
+
+        self.horizontalLayout_9.addLayout(self.verticalLayout_8)
+
+        self.verticalLayout_9 = QVBoxLayout()
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.SearchEntry = QLineEdit(self.centralwidget)
+        self.SearchEntry.setObjectName(u"SearchEntry")
+        sizePolicy1.setHeightForWidth(self.SearchEntry.sizePolicy().hasHeightForWidth())
+        self.SearchEntry.setSizePolicy(sizePolicy1)
+        self.SearchEntry.setStyleSheet(u"color: rgb(255, 255, 255);")
+
+        self.horizontalLayout.addWidget(self.SearchEntry)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -297,6 +283,9 @@ class Ui_MainWindow(object):
         self.SQL_Table.setSizePolicy(sizePolicy4)
         self.SQL_Table.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "")
+        self.SQL_Table.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
+        self.SQL_Table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.SQL_Table.setSelectionBehavior(QAbstractItemView.SelectRows)
 
         self.verticalLayout.addWidget(self.SQL_Table)
 
@@ -311,30 +300,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.ConnectButton = QPushButton(self.centralwidget)
-        self.ConnectButton.setObjectName(u"ConnectButton")
-        self.ConnectButton.setEnabled(True)
-        sizePolicy3.setHeightForWidth(self.ConnectButton.sizePolicy().hasHeightForWidth())
-        self.ConnectButton.setSizePolicy(sizePolicy3)
-        self.ConnectButton.setSizeIncrement(QSize(0, 3))
-        self.ConnectButton.setStyleSheet(u"QPushButton{\n"
-"    color: white;\n"
-"    border: none;\n"
-"    padding: 5px;\n"
-"    background-color: #2a2a2a;\n"
-"    border-radius: 5px;\n"
-"}\n"
-"\n"
-"QPushButton::checked {\n"
-"    background-color: #2d5bd4;\n"
-"}\n"
-"\n"
-"QPushButton::pressed {\n"
-"    background-color: #2d5bd4;\n"
-"}")
-
-        self.horizontalLayout_3.addWidget(self.ConnectButton)
-
         self.DisconnectButton = QPushButton(self.centralwidget)
         self.DisconnectButton.setObjectName(u"DisconnectButton")
         self.DisconnectButton.setEnabled(True)
@@ -381,7 +346,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addLayout(self.verticalLayout_3)
 
 
-        self.horizontalLayout_8.addLayout(self.verticalLayout_9)
+        self.horizontalLayout_9.addLayout(self.verticalLayout_9)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -399,12 +364,11 @@ class Ui_MainWindow(object):
         self.SexOption.setItemText(2, QCoreApplication.translate("MainWindow", u"Female", None))
         self.SexOption.setItemText(3, QCoreApplication.translate("MainWindow", u"Other", None))
 
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">Phone Number:</span></p></body></html>", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">Birthday:</span></p></body></html>", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">Salary:</span></p></body></html>", None))
-        self.AddButton.setText(QCoreApplication.translate("MainWindow", u"  Add  ", None))
+        self.AddButton.setText(QCoreApplication.translate("MainWindow", u"     Add     ", None))
+        self.UpdateButton.setText(QCoreApplication.translate("MainWindow", u"   Update   ", None))
         self.SearchEntry.setText("")
-        self.Search.setText(QCoreApplication.translate("MainWindow", u"Search Name", None))
         ___qtablewidgetitem = self.SQL_Table.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Name", None));
         ___qtablewidgetitem1 = self.SQL_Table.horizontalHeaderItem(1)
@@ -415,8 +379,6 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Salary", None));
         ___qtablewidgetitem4 = self.SQL_Table.horizontalHeaderItem(4)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Date", None));
-        self.ConnectButton.setText(QCoreApplication.translate("MainWindow", u"         Edit        ", None))
         self.DisconnectButton.setText(QCoreApplication.translate("MainWindow", u"       Remove       ", None))
         self.StatusLine.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">Status:</span></p></body></html>", None))
-    # retranslateUi
-
+        
