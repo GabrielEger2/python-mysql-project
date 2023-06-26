@@ -1,4 +1,4 @@
-# Movies Revenues Analysis
+# Qt CRUD
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 This is a code repository for a complete CRUD program with a frontend made using Qt, and a database made using MySQLite3
